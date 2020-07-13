@@ -173,7 +173,7 @@ function App() {
 						backgroundSize: 'cover'
 					}}
 				>
-					<Text fontSize={[ 6, 7, 9 ]} sx={{ p: 3, color: 'white', fontWeight: 'bolder' }}>
+					<Text fontSize={[ 6, 100, 150 ]} sx={{ p: 3, color: 'white', fontWeight: 'bolder' }}>
 						HEY <br /> CONGRESS!
 					</Text>
 					<br />
