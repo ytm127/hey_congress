@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/hey_congress/static/css/main.5f361e03.chunk.css",
-    "main.js": "/hey_congress/static/js/main.d7fcdf5a.chunk.js",
-    "main.js.map": "/hey_congress/static/js/main.d7fcdf5a.chunk.js.map",
+    "main.css": "/hey_congress/static/css/main.eb1fb50a.chunk.css",
+    "main.js": "/hey_congress/static/js/main.2488c5ea.chunk.js",
+    "main.js.map": "/hey_congress/static/js/main.2488c5ea.chunk.js.map",
     "runtime-main.js": "/hey_congress/static/js/runtime-main.55e07bce.js",
     "runtime-main.js.map": "/hey_congress/static/js/runtime-main.55e07bce.js.map",
     "static/js/2.f54d749d.chunk.js": "/hey_congress/static/js/2.f54d749d.chunk.js",
     "static/js/2.f54d749d.chunk.js.map": "/hey_congress/static/js/2.f54d749d.chunk.js.map",
     "index.html": "/hey_congress/index.html",
-    "precache-manifest.7f2c70467447021ae54a2fbe5bde890a.js": "/hey_congress/precache-manifest.7f2c70467447021ae54a2fbe5bde890a.js",
+    "precache-manifest.638537247fc672f459257f336cbed18c.js": "/hey_congress/precache-manifest.638537247fc672f459257f336cbed18c.js",
     "service-worker.js": "/hey_congress/service-worker.js",
-    "static/css/main.5f361e03.chunk.css.map": "/hey_congress/static/css/main.5f361e03.chunk.css.map",
+    "static/css/main.eb1fb50a.chunk.css.map": "/hey_congress/static/css/main.eb1fb50a.chunk.css.map",
     "static/js/2.f54d749d.chunk.js.LICENSE.txt": "/hey_congress/static/js/2.f54d749d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.55e07bce.js",
     "static/js/2.f54d749d.chunk.js",
-    "static/css/main.5f361e03.chunk.css",
-    "static/js/main.d7fcdf5a.chunk.js"
+    "static/css/main.eb1fb50a.chunk.css",
+    "static/js/main.2488c5ea.chunk.js"
   ]
 }

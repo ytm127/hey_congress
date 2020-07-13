@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6669980ec65227cfa31e06c309cb9876",
+    "revision": "6ff857c2a0a3b342dd3638b4ed0b99e9",
     "url": "/hey_congress/index.html"
   },
   {
-    "revision": "9a7393762ab79aea3611",
-    "url": "/hey_congress/static/css/main.5f361e03.chunk.css"
+    "revision": "22517e0411279ea9a59a",
+    "url": "/hey_congress/static/css/main.eb1fb50a.chunk.css"
   },
   {
     "revision": "d005c154e76014190145",
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/hey_congress/static/js/2.f54d749d.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "9a7393762ab79aea3611",
-    "url": "/hey_congress/static/js/main.d7fcdf5a.chunk.js"
+    "revision": "22517e0411279ea9a59a",
+    "url": "/hey_congress/static/js/main.2488c5ea.chunk.js"
   },
   {
     "revision": "7e89c5ee8f892c2a6a0d",
