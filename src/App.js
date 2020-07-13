@@ -165,7 +165,7 @@ function App() {
 					<Box p={3} width={1 / 5} bg="#073b4c" />
 				</Flex>
 				<Box sx={{ p: 4 }}>
-					<Heading fontSize={[ 5, 6, 7 ]} color="black">
+					<Heading fontSize={[ 5, 6, 7 ]} sx={{p:3, color:'white'}} className='speech-bubble'>
 						HEY <br /> CONGRESS!
 					</Heading>
 					<br />
