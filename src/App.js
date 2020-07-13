@@ -12,7 +12,7 @@ function App() {
 	const [ allSenators, setAllSenators ] = useState([]);
 	const [ listOfSenators, setListOfSenators ] = useState([]);
 	const [ listOfReps, setListOfReps ] = useState([]);
-	const [ userLocation, setUserLocation ] = useState({ state: null, district: null });
+	const [ userLocation, setUserLocation ] = useState({ state: null, district: null, zip: null });
   const [ isLoading, setIsLoading ] = useState(false);
   const [placeholderZip, setPlaceholderZip] = useState(null)
 
@@ -53,6 +53,22 @@ function App() {
 		},
 		[ userLocation ]
   );
+
+  useEffect(()=>{
+    // update district accordingly anytime zip changes 
+    if(userLocation.zip){
+      axios
+      .get(
+        `https://api.geocod.io/v1.6/geocode?postal_code=${userLocation.zip}&fields=cd&api_key=d5cad54ac545cd2cb9d2f0c525df55a0c450fad`
+      )
+      .then(res => {
+        console.log(res.data)
+        const district = res.data.results[0].fields.congressional_districts[0]
+        setUserLocation({...userLocation, ...{district}})
+      })
+      .catch(err => console.error(err))
+    }
+  }, [userLocation.zip])
   
   const clearLists = () => {
     setListOfSenators([])
@@ -134,10 +150,10 @@ function App() {
     clearLists()
 		let val = e.target.value;
 		if (val.length >= 5) {
-			setUserLocation({ state: getState(val) });
+			setUserLocation({ state: getState(val), zip: val });
 		}
 		if (val.length === 0) {
-			setUserLocation({ state: null });
+			setUserLocation({ state: null , zip: null});
 		}
 	};
 
