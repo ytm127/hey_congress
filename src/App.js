@@ -19,7 +19,6 @@ function App() {
 	//********* ON MOUNT *********/
 	useEffect(() => {
 		if ('geolocation' in navigator) {
-			console.log('Available');
 			navigator.geolocation.getCurrentPosition((position) => {
 				const latlng = `${position.coords.latitude}, ${position.coords.longitude}`;
 				axios
@@ -27,10 +26,9 @@ function App() {
 						`https://api.geocod.io/v1.6/reverse?q=${latlng}&&fields=cd&api_key=d5cad54ac545cd2cb9d2f0c525df55a0c450fad`
 					)
 					.then((res) => {
-						console.log(res.data.results[0].address_components.zip);
 						setPlaceholderZip(res.data.results[0].address_components.zip);
 					})
-					.catch((err) => console.log(err));
+					.catch((err) => console.error(err));
 			});
 		} else {
 			console.log('Not Available');
@@ -63,7 +61,6 @@ function App() {
 						`https://api.geocod.io/v1.6/geocode?postal_code=${userLocation.zip}&fields=cd&api_key=d5cad54ac545cd2cb9d2f0c525df55a0c450fad`
 					)
 					.then((res) => {
-						console.log(res.data);
 						const district = res.data.results[0].fields.congressional_districts[0];
 						setUserLocation({ ...userLocation, ...{ district } });
 					})
@@ -117,7 +114,7 @@ function App() {
 				const districtData = res.data.results[0].fields.congressional_districts[0];
 				setUserLocation({ state: st, district: districtData });
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => console.error(err));
 	};
 
 	const handleLookUpUserLocation = () => {
@@ -126,8 +123,6 @@ function App() {
 		// GET USER LOCATION (LATITUDE/LONGITUDE)
 		navigator.geolocation.getCurrentPosition((position) => {
 			const latlng = `${position.coords.latitude}, ${position.coords.longitude}`;
-			// const latlng = `36.0822, -94.1719`; // fay
-			// const latlng = `38.8339, -104.8214`; // co springs
 			getUserLocationWithLatLng(latlng);
 			axios
 				.get(
@@ -196,7 +191,7 @@ function App() {
 					{isLoading ? (
 						'loading...'
 					) : 
-					listOfReps.length !== 0  && <div>
+					listOfReps && listOfReps.length !== 0  && <div>
 						{listOfSenators.length > 0 && <p style={{fontSize:12}}>SENATORS</p>}
 						{
 							listOfSenators.map(person => <CongressmanCard person={person} />)
