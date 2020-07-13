@@ -146,7 +146,7 @@ function App() {
 	const handleInput = (e) => {
 		clearLists();
 		let val = e.target.value;
-		if (val.length >= 5) {
+		if (val.length === 5) {
 			setUserLocation({ state: getState(val), zip: val });
 		}
 		if (val.length === 0) {
