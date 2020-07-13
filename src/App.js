@@ -197,7 +197,7 @@ function App() {
 						'loading...'
 					) : 
 					listOfReps.length !== 0  && <div>
-						<p style={{fontSize:12}}>SENATORS</p>
+						{listOfSenators.length > 0 && <p style={{fontSize:12}}>SENATORS</p>}
 						{
 							listOfSenators.map(person => <CongressmanCard person={person} />)
 						}
