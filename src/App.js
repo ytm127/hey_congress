@@ -13,12 +13,25 @@ function App() {
 	const [ listOfSenators, setListOfSenators ] = useState([]);
 	const [ listOfReps, setListOfReps ] = useState([]);
 	const [ userLocation, setUserLocation ] = useState({ state: null, district: null });
-	const [ isLoading, setIsLoading ] = useState(false);
+  const [ isLoading, setIsLoading ] = useState(false);
+  const [placeholderZip, setPlaceholderZip] = useState(null)
 
 	//********* ON MOUNT *********/
 	useEffect(() => {
 		if ('geolocation' in navigator) {
-			console.log('Available');
+      console.log('Available');
+      navigator.geolocation.getCurrentPosition(position => {
+        const latlng = `${position.coords.latitude}, ${position.coords.longitude}`
+        axios
+        .get(
+          `https://api.geocod.io/v1.6/reverse?q=${latlng}&&fields=cd&api_key=d5cad54ac545cd2cb9d2f0c525df55a0c450fad`
+        )
+        .then((res) => {
+          console.log(res.data.results[0].address_components.zip)
+          setPlaceholderZip((res.data.results[0].address_components.zip))
+        })
+        .catch((err) => console.log(err));
+      })
 		} else {
 			console.log('Not Available');
 		}
@@ -39,13 +52,17 @@ function App() {
       handleGetSenators(userLocation.state)
 		},
 		[ userLocation ]
-	);
+  );
+  
+  const clearLists = () => {
+    setListOfSenators([])
+    setListOfReps([])
+  }
 
 	const handleGetSenators = (st) => {
 		setIsLoading(true);
 		const senators = allSenators.filter((senator) => senator.state === st);
 		setListOfSenators(senators);
-		console.log({ senators });
 		setIsLoading(false);
 	};
 
@@ -79,7 +96,7 @@ function App() {
 			.then((res) => {
 				const st = res.data.results[0].address_components['state'];
 				const districtData = res.data.results[0].fields.congressional_districts[0];
-				setUserLocation({ state: st, district: districtData });
+        setUserLocation({ state: st, district: districtData });
 			})
 			.catch((err) => console.log(err));
 	};
@@ -92,6 +109,7 @@ function App() {
 		navigator.geolocation.getCurrentPosition((position) => {
 			const latlng = `${position.coords.latitude}, ${position.coords.longitude}`
 			// const latlng = `36.0822, -94.1719`; // fay
+			// const latlng = `38.8339, -104.8214`; // co springs
 			getUserLocationWithLatLng(latlng);
 			axios
 				.get(
@@ -113,6 +131,7 @@ function App() {
 	};
 
 	const handleInput = (e) => {
+    clearLists()
 		let val = e.target.value;
 		if (val.length >= 5) {
 			setUserLocation({ state: getState(val) });
@@ -141,12 +160,13 @@ function App() {
 
 					<Box sx={{ mb: 3 }}>
 						<Label htmlFor="zipcode">SEARCH BY ZIPCODE</Label>
-						<Input id="email" name="email" type="email" placeholder="72701..." onChange={handleInput} />
+						<Input id="email" name="email" type="email" placeholder={placeholderZip ? `${placeholderZip}...` : 'Type in zipcode...'} onChange={handleInput} />
 					</Box>
 					<Text>- OR -</Text>
 					<Button sx={{ mt: 3 }} onClick={handleLookUpUserLocation}>
 						Use my location
 					</Button>
+          <Text sx={{fontSize:1 , color:'grey'}}>recommended</Text>
 				</Box>
 				<Box sx={{ margin: 'auto' }}>
 					{isLoading ? (
