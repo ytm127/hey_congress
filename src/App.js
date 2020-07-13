@@ -7,6 +7,7 @@ import { ThemeProvider } from 'emotion-theming';
 import theme from '@rebass/preset';
 import './App.css';
 import { getState } from './utils';
+import logo from '../src/activism_pic.jpg';
 
 function App() {
 	const [ allSenators, setAllSenators ] = useState([]);
@@ -157,31 +158,41 @@ function App() {
 	return (
 		<ThemeProvider theme={theme}>
 			<div className="App" style={{ height: '100vh' }}>
-				<Flex>
+				{/* <Flex>
 					<Box p={3} width={1 / 5} bg="#ef476f" />
 					<Box p={3} width={1 / 5} bg="#ffd166" />
 					<Box p={3} width={1 / 5} bg="#06d6a0" />
 					<Box p={3} width={1 / 5} bg="#118ab2" />
 					<Box p={3} width={1 / 5} bg="#073b4c" />
-				</Flex>
-				<Box sx={{ p: 4 }}>
-					<Heading fontSize={[ 5, 6, 7 ]} sx={{p:3, color:'white'}} className='speech-bubble'>
+				</Flex> */}
+				<Box
+					sx={{
+						p: 4,
+						backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3),
+						rgba(0, 0, 0, 0.5)), url(${logo})`,
+						backgroundSize: 'cover'
+					}}
+				>
+					<Text fontSize={[ 6, 7, 9 ]} sx={{ p: 3, color: 'white', fontWeight: 'bolder' }}>
 						HEY <br /> CONGRESS!
-					</Heading>
+					</Text>
 					<br />
 					<br />
 
 					<Box sx={{ mb: 3 }}>
-						<Label htmlFor="zipcode">SEARCH BY ZIPCODE</Label>
+						<Label htmlFor="zipcode" sx={{ color: 'white' }}>
+							SEARCH BY ZIPCODE
+						</Label>
 						<Input
 							id="email"
 							name="email"
 							type="email"
 							placeholder={placeholderZip ? `${placeholderZip}...` : 'Type in zipcode...'}
 							onChange={handleInput}
+							sx={{ background: 'white' }}
 						/>
 					</Box>
-					<Text>- OR -</Text>
+					<Text sx={{ color: 'white' }}>- OR -</Text>
 					<Button sx={{ mt: 3 }} onClick={handleLookUpUserLocation}>
 						Use my location
 					</Button>
@@ -190,19 +201,17 @@ function App() {
 				<Box sx={{ margin: 'auto' }}>
 					{isLoading ? (
 						'loading...'
-					) : 
-					listOfReps && listOfReps.length !== 0  && <div>
-						{listOfSenators.length > 0 && <p style={{fontSize:12}}>SENATORS</p>}
-						{
-							listOfSenators.map(person => <CongressmanCard person={person} />)
-						}
-						<p style={{fontSize:12}}>REPRESENTATIVE</p>
-						{
-							listOfReps.map(person => <CongressmanCard person={person} />)
-						}
-
-					</div>
-					}
+					) : (
+						listOfReps &&
+						listOfReps.length !== 0 && (
+							<div>
+								{listOfSenators.length > 0 && <p style={{ fontSize: 12 }}>SENATORS</p>}
+								{listOfSenators.map((person) => <CongressmanCard person={person} />)}
+								<p style={{ fontSize: 12 }}>REPRESENTATIVE</p>
+								{listOfReps.map((person) => <CongressmanCard person={person} />)}
+							</div>
+						)
+					)}
 				</Box>
 			</div>
 		</ThemeProvider>
