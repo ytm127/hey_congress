@@ -1,15 +1,25 @@
 import React from 'react';
-import { Button, Box, Text, Card, Heading } from 'rebass';
+import { Button, Box, Flex, Card, Heading } from 'rebass';
 
-export const CongressmanCard = ({ lastName, firstName, party, phone }) => {
+export const CongressmanCard = ({person}) => {
+	const { last_name, first_name, party, phone } = person
+	const firstName = first_name
+	const lastName = last_name
 	return (
-		<Card width={256} sx={{ m: 'auto', mb: 2, bg: 'lightgrey', borderRadius: 5 }}>
-			<Heading sx={{ fontSize: 2 }}>
-				<a href={`tel:${phone}`} style={{ color: 'white', margin:'0 10px 0 10px' }}>
-					<img src="https://img.icons8.com/ios/50/000000/phone.png" style={{ height: 20, width: 20 }} />
-				</a>
-				{firstName} {lastName} ({party})
-			</Heading>
+		<Card width={256} sx={{ m: 'auto', mb: 2, bg: 'whitesmoke', borderRadius: 5, p: 1 }}>
+			<Flex>
+				<Box sx={{ background: 'lightgreen', borderRadius: 5 }} width={1 / 5} >
+					<a href={`tel:${phone}`} style={{ margin: '0 10px 0 10px' }}>
+						<img src="https://img.icons8.com/ios/50/000000/phone.png" style={{ height: 20, width: 20 }} />
+					</a>
+				</Box>
+				<Box width={4 / 5}>
+					<Heading sx={{ fontSize: 2 }}>
+						{firstName} {lastName} ({party})
+					</Heading>
+				</Box>
+			</Flex>
+
 		</Card>
 	);
 };

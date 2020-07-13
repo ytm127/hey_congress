@@ -13,25 +13,25 @@ function App() {
 	const [ listOfSenators, setListOfSenators ] = useState([]);
 	const [ listOfReps, setListOfReps ] = useState([]);
 	const [ userLocation, setUserLocation ] = useState({ state: null, district: null, zip: null });
-  const [ isLoading, setIsLoading ] = useState(false);
-  const [placeholderZip, setPlaceholderZip] = useState(null)
+	const [ isLoading, setIsLoading ] = useState(false);
+	const [ placeholderZip, setPlaceholderZip ] = useState(null);
 
 	//********* ON MOUNT *********/
 	useEffect(() => {
 		if ('geolocation' in navigator) {
-      console.log('Available');
-      navigator.geolocation.getCurrentPosition(position => {
-        const latlng = `${position.coords.latitude}, ${position.coords.longitude}`
-        axios
-        .get(
-          `https://api.geocod.io/v1.6/reverse?q=${latlng}&&fields=cd&api_key=d5cad54ac545cd2cb9d2f0c525df55a0c450fad`
-        )
-        .then((res) => {
-          console.log(res.data.results[0].address_components.zip)
-          setPlaceholderZip((res.data.results[0].address_components.zip))
-        })
-        .catch((err) => console.log(err));
-      })
+			console.log('Available');
+			navigator.geolocation.getCurrentPosition((position) => {
+				const latlng = `${position.coords.latitude}, ${position.coords.longitude}`;
+				axios
+					.get(
+						`https://api.geocod.io/v1.6/reverse?q=${latlng}&&fields=cd&api_key=d5cad54ac545cd2cb9d2f0c525df55a0c450fad`
+					)
+					.then((res) => {
+						console.log(res.data.results[0].address_components.zip);
+						setPlaceholderZip(res.data.results[0].address_components.zip);
+					})
+					.catch((err) => console.log(err));
+			});
 		} else {
 			console.log('Not Available');
 		}
@@ -48,32 +48,35 @@ function App() {
 
 	useEffect(
 		() => {
-      handleGetReps();
-      handleGetSenators(userLocation.state)
+			handleGetReps();
+			handleGetSenators(userLocation.state);
 		},
 		[ userLocation ]
-  );
+	);
 
-  useEffect(()=>{
-    // update district accordingly anytime zip changes 
-    if(userLocation.zip){
-      axios
-      .get(
-        `https://api.geocod.io/v1.6/geocode?postal_code=${userLocation.zip}&fields=cd&api_key=d5cad54ac545cd2cb9d2f0c525df55a0c450fad`
-      )
-      .then(res => {
-        console.log(res.data)
-        const district = res.data.results[0].fields.congressional_districts[0]
-        setUserLocation({...userLocation, ...{district}})
-      })
-      .catch(err => console.error(err))
-    }
-  }, [userLocation.zip])
-  
-  const clearLists = () => {
-    setListOfSenators([])
-    setListOfReps([])
-  }
+	useEffect(
+		() => {
+			// update district accordingly anytime zip changes
+			if (userLocation.zip) {
+				axios
+					.get(
+						`https://api.geocod.io/v1.6/geocode?postal_code=${userLocation.zip}&fields=cd&api_key=d5cad54ac545cd2cb9d2f0c525df55a0c450fad`
+					)
+					.then((res) => {
+						console.log(res.data);
+						const district = res.data.results[0].fields.congressional_districts[0];
+						setUserLocation({ ...userLocation, ...{ district } });
+					})
+					.catch((err) => console.error(err));
+			}
+		},
+		[ userLocation.zip ]
+	);
+
+	const clearLists = () => {
+		setListOfSenators([]);
+		setListOfReps([]);
+	};
 
 	const handleGetSenators = (st) => {
 		setIsLoading(true);
@@ -112,18 +115,17 @@ function App() {
 			.then((res) => {
 				const st = res.data.results[0].address_components['state'];
 				const districtData = res.data.results[0].fields.congressional_districts[0];
-        setUserLocation({ state: st, district: districtData });
+				setUserLocation({ state: st, district: districtData });
 			})
 			.catch((err) => console.log(err));
 	};
 
 	const handleLookUpUserLocation = () => {
-
 		let locationPayload = {};
 		setIsLoading(true);
 		// GET USER LOCATION (LATITUDE/LONGITUDE)
 		navigator.geolocation.getCurrentPosition((position) => {
-			const latlng = `${position.coords.latitude}, ${position.coords.longitude}`
+			const latlng = `${position.coords.latitude}, ${position.coords.longitude}`;
 			// const latlng = `36.0822, -94.1719`; // fay
 			// const latlng = `38.8339, -104.8214`; // co springs
 			getUserLocationWithLatLng(latlng);
@@ -147,13 +149,13 @@ function App() {
 	};
 
 	const handleInput = (e) => {
-    clearLists()
+		clearLists();
 		let val = e.target.value;
 		if (val.length >= 5) {
 			setUserLocation({ state: getState(val), zip: val });
 		}
 		if (val.length === 0) {
-			setUserLocation({ state: null , zip: null});
+			setUserLocation({ state: null, zip: null });
 		}
 	};
 
@@ -167,7 +169,7 @@ function App() {
 					<Box p={3} width={1 / 5} bg="#118ab2" />
 					<Box p={3} width={1 / 5} bg="#073b4c" />
 				</Flex>
-				<Box sx={{ p: 5 }}>
+				<Box sx={{ p: 4 }}>
 					<Heading fontSize={[ 5, 6, 7 ]} color="black">
 						HEY <br /> CONGRESS!
 					</Heading>
@@ -176,30 +178,36 @@ function App() {
 
 					<Box sx={{ mb: 3 }}>
 						<Label htmlFor="zipcode">SEARCH BY ZIPCODE</Label>
-						<Input id="email" name="email" type="email" placeholder={placeholderZip ? `${placeholderZip}...` : 'Type in zipcode...'} onChange={handleInput} />
+						<Input
+							id="email"
+							name="email"
+							type="email"
+							placeholder={placeholderZip ? `${placeholderZip}...` : 'Type in zipcode...'}
+							onChange={handleInput}
+						/>
 					</Box>
 					<Text>- OR -</Text>
 					<Button sx={{ mt: 3 }} onClick={handleLookUpUserLocation}>
 						Use my location
 					</Button>
-          <Text sx={{fontSize:1 , color:'grey'}}>recommended</Text>
+					<Text sx={{ fontSize: 1, color: 'grey' }}>recommended</Text>
 				</Box>
 				<Box sx={{ margin: 'auto' }}>
 					{isLoading ? (
 						'loading...'
-					) : (
-						(listOfSenators || listOfReps) &&
-						[ ...listOfSenators, ...listOfReps ].map((person) => {
-							return (
-								<CongressmanCard
-									phone={person.phone}
-									lastName={person.last_name}
-									firstName={person.first_name}
-									party={person.party}
-								/>
-							);
-						})
-					)}
+					) : 
+					listOfReps.length !== 0  && <div>
+						<p style={{fontSize:12}}>SENATORS</p>
+						{
+							listOfSenators.map(person => <CongressmanCard person={person} />)
+						}
+						<p style={{fontSize:12}}>REPRESENTATIVE</p>
+						{
+							listOfReps.map(person => <CongressmanCard person={person} />)
+						}
+
+					</div>
+					}
 				</Box>
 			</div>
 		</ThemeProvider>
