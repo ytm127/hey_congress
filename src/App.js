@@ -169,7 +169,7 @@ function App() {
 				</Flex>
 				<Box sx={{ p: 5 }}>
 					<Heading fontSize={[ 5, 6, 7 ]} color="black">
-						CALL <br />MY <br />CONGRESSMAN
+						HEY <br /> CONGRESS!
 					</Heading>
 					<br />
 					<br />
