@@ -167,10 +167,12 @@ function App() {
 				</Flex> */}
 				<Box
 					sx={{
+						m:2,
 						p: 4,
 						backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3),
 						rgba(0, 0, 0, 0.5)), url(${logo})`,
-						backgroundSize: 'cover'
+						backgroundSize: 'cover',
+						borderRadius:10
 					}}
 				>
 					<Text fontSize={[ 6, 100, 150 ]} sx={{ p: 3, color: 'white', fontWeight: 'bolder' }}>
@@ -205,6 +207,7 @@ function App() {
 						listOfReps &&
 						listOfReps.length !== 0 && (
 							<div>
+								{console.log({listOfSenators, listOfReps})}
 								{listOfSenators.length > 0 && <p style={{ fontSize: 12 }}>SENATORS</p>}
 								{listOfSenators.map((person) => <CongressmanCard person={person} />)}
 								<p style={{ fontSize: 12 }}>REPRESENTATIVE</p>
