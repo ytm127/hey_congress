@@ -7,6 +7,7 @@ import { ThemeProvider } from 'emotion-theming';
 import theme from '@rebass/preset';
 import './App.css';
 import { getState } from './utils';
+// import logo from '../src/blm_pink.png';
 import logo from '../src/activism_pic.jpg';
 
 function App() {
@@ -35,18 +36,23 @@ function App() {
 			console.log('Not Available');
 		}
 		// get ALL senators on init
+		setIsLoading(true)
 		axios
 			.get('https://api.propublica.org/congress/v1/116/senate/members.json', {
 				headers: {
 					'X-API-Key': 'Gp5WuTAlck2YqCBBLPuHzIrvVtqgDMlALlUKAFDt'
 				}
 			})
-			.then((res) => setAllSenators(res.data.results[0].members))
+			.then((res) => {setAllSenators(res.data.results[0].members)
+		setIsLoading(false)
+			
+			})
 			.catch((error) => console.error(error));
 	}, []);
 
 	useEffect(
 		() => {
+			setIsLoading(true)
 			handleGetReps();
 			handleGetSenators(userLocation.state);
 		},
@@ -167,12 +173,12 @@ function App() {
 				</Flex> */}
 				<Box
 					sx={{
-						m:2,
+						m: 2,
 						p: 4,
 						backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3),
 						rgba(0, 0, 0, 0.5)), url(${logo})`,
 						backgroundSize: 'cover',
-						borderRadius:10
+						borderRadius: 10
 					}}
 				>
 					<Text fontSize={[ 6, 100, 150 ]} sx={{ p: 3, color: 'white', fontWeight: 'bolder' }}>
@@ -207,7 +213,7 @@ function App() {
 						listOfReps &&
 						listOfReps.length !== 0 && (
 							<div>
-								{console.log({listOfSenators, listOfReps})}
+								{console.log({ listOfSenators, listOfReps })}
 								{listOfSenators.length > 0 && <p style={{ fontSize: 12 }}>SENATORS</p>}
 								{listOfSenators.map((person) => <CongressmanCard person={person} />)}
 								<p style={{ fontSize: 12 }}>REPRESENTATIVE</p>
